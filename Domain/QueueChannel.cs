@@ -1,12 +1,12 @@
 ﻿namespace Domain;
 
-public sealed class ChannelX<T> : IChannel<T> where T : Product
+public sealed class QueueChannel<T> : IChannel<T> where T : Product
 {
-    private const int MAX_BOUND_CHANNEL = 5;
+    private const int MAX_BOUND_CHANNEL = 10;
     private readonly ChannelWriter<T> _writer;
     private readonly ChannelReader<T> _reader;
 
-    public ChannelX()
+    public QueueChannel()
     {
         var options = new BoundedChannelOptions(MAX_BOUND_CHANNEL)
         {
