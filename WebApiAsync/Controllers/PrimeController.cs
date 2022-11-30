@@ -11,12 +11,12 @@ public class PrimeController : BaseController
         _productManager = productManager;
     }
 
-    [HttpGet("{val}")]
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
 
-    public async Task<ActionResult> GetAsync(string val) {
+    public async Task<ActionResult> GetAsync([FromRoute] int id) {
         await Task.CompletedTask;
-        return Ok("Action result = " + val);
+        return Ok("Action result = " + id);
     }
 
 
@@ -42,21 +42,19 @@ public class PrimeController : BaseController
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
-
-    public async Task<ActionResult> Process([FromBody] int Id)
+    public async Task<ActionResult> Process([FromBody] int id)
     {
-        await _productManager.Add(new Product { Id = Id, Name = Guid.NewGuid().ToString()}, CancellationToken.None);
+        await _productManager.Add(new Product { Id = id, Name = Guid.NewGuid().ToString()}, CancellationToken.None);
 
-        return Accepted(Id);
+        return AcceptedAtAction(nameof(Pooling), new { id = id }, id);
     }
 
 
-    //[HttpGet("Pooling/{Id}{Name}")]
-    //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-    //[ProducesResponseType(StatusCodes.Status202Accepted)]
-
-    //public async Task<ActionResult> Pooling([FromRoute] string Id)
-    //{
-    //    return null;
-    //}
+    [HttpGet("Pooling/{id}")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult> Pooling([FromRoute] int id)
+    {
+        return null;
+    }
 }

@@ -18,6 +18,11 @@ builder.Services.AddHealthChecks()
         failureStatus: HealthStatus.Degraded,
         tags: new[] { "example_health_check" });
 
+builder.Services.AddControllers(options =>
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
