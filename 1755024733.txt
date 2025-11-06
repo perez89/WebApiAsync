@@ -1,0 +1,3 @@
+/wp-content/plugins/ioimedia-app-banner/*
+/js/jquery.smartbanner.js
+||br.app.link^$third-party
